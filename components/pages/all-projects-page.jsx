@@ -1,68 +1,32 @@
 import { useState } from "react";
-import { PROJECTS, t } from "../../data/site-data.js";
-import { useReveal } from "../../hooks/use-reveal.js";
-import { useCardTilt } from "../../hooks/use-card-tilt.js";
-import { Controls, Footer, ScrollArrow } from "../layout.jsx";
-import { ChatAssistant } from "../chat-assistant.jsx";
-import { ProjectCard } from "../cards.jsx";
+import { projects, t } from "../../data/site-data.js";
+import { SiteHeader, SiteFooter } from "../layout.jsx";
+import { ProjectRow, ProjectModal } from "../cards.jsx";
 
-  export function AllProjectsPage({ lang, setLang, dark, setDark }) {
-    const [activeFeed, setActiveFeed] = useState("ai");
-    const feeds = [
-      { id: "ai", label: t(lang, "projects_ia_title"), items: PROJECTS.ai },
-      { id: "other", label: t(lang, "projects_other_title"), items: [...PROJECTS.backend, ...PROJECTS.tools] }
-    ];
-    const currentFeed = feeds.find((feed) => feed.id === activeFeed) || feeds[0];
-
-    useReveal(activeFeed);
-    useCardTilt(activeFeed);
-
-    return (
-      <>
-        <header className="hero">
-          <Controls lang={lang} setLang={setLang} dark={dark} setDark={setDark} />
-          <div className="hero-content">
-            <h1 className="hero-title">{t(lang, "all_projects_page_title")}</h1>
-            <p className="hero-subtitle">{t(lang, "all_projects_page_subtitle")}</p>
-            <div className="hero-buttons">
-              <a href="index.html" className="btn btn-primary">{t(lang, "back_to_portfolio_button")}</a>
-            </div>
-          </div>
-          <ScrollArrow href="#all-projects-section" label={t(lang, "projects_title")} prompt={t(lang, "next_section_label")} />
-        </header>
-
-        <main>
-          <div className="container">
-            <section id="all-projects-section" className="section">
-              <h2 className="section-title reveal">{t(lang, "all_projects_page_title")}</h2>
-
-              <div className="project-feed-tabs reveal" role="tablist" aria-label={t(lang, "projects_title")}>
-                {feeds.map((feed) => (
-                  <button
-                    key={feed.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={activeFeed === feed.id}
-                    className={`project-feed-tab ${activeFeed === feed.id ? "active" : ""}`}
-                    onClick={() => setActiveFeed(feed.id)}
-                  >
-                    {feed.label}
-                  </button>
-                ))}
-              </div>
-
-              <h3 className="project-subtitle reveal">{currentFeed.label}</h3>
-              <div className="project-feed-grid">
-                {currentFeed.items.map((project) => (
-                  <ProjectCard key={`${activeFeed}-${project.title}`} lang={lang} project={project} />
-                ))}
-              </div>
-            </section>
-          </div>
-        </main>
-
-        <Footer lang={lang} />
-        <ChatAssistant lang={lang} quickReplies={[t(lang, "chat_q1"), t(lang, "chat_q2"), t(lang, "chat_q3")]} intro={t(lang, "chat_initial_message")} />
-      </>
-    );
-  }
+export function AllProjectsPage({ lang, setLang, dark, setDark }) {
+  const [feed, setFeed] = useState("ai");
+  const [open, setOpen] = useState(null);
+  const feeds = [
+    { id: "ai", label: t(lang, "feed_ai"), items: projects.ai },
+    { id: "other", label: t(lang, "feed_other"), items: [...projects.backend, ...projects.tools] }
+  ];
+  const current = feeds.find((f) => f.id === feed);
+  return (
+    <>
+      <SiteHeader lang={lang} setLang={setLang} dark={dark} setDark={setDark} />
+      <main id="main" className="page">
+        <a className="text-link back" href="./">{t(lang, "back_home")}</a>
+        <h1>{t(lang, "all_projects_title")}</h1>
+        <p className="section-hint">{t(lang, "all_projects_subtitle")}</p>
+        <div className="tabs" role="group">
+          {feeds.map((f) => <button key={f.id} type="button" aria-pressed={feed === f.id} onClick={() => setFeed(f.id)}>{f.label}</button>)}
+        </div>
+        <ul className="project-list">
+          {current.items.map((p) => <ProjectRow key={`${feed}-${p.title}`} lang={lang} project={p} onOpen={setOpen} />)}
+        </ul>
+      </main>
+      <SiteFooter lang={lang} />
+      <ProjectModal lang={lang} project={open} onClose={() => setOpen(null)} />
+    </>
+  );
+}

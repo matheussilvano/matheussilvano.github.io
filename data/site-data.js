@@ -1,158 +1,11 @@
+import { TEXT } from "./text.js";
+
 const ASSETS = {
   favicon: "/assets/images/ui/favicon.png",
-  assistant: "/assets/images/ui/assistant_logo.png",
-  flagPt: "/assets/images/flags/brazil-flag.png",
-  flagEn: "/assets/images/flags/uk-flag.png",
-  flagEs: "/assets/images/flags/spain-flag.png",
   profile: "/assets/images/profile/matheus-silvano.png",
   cvPt: "/assets/docs/cv/cv_matheus_silvano_pereira.pdf",
   cvEn: "/assets/docs/cv/english_cv_matheus_silvano_pereira.pdf"
 };
-
-const API_URL = "https://api.matheussilvano.dev/ask";
-
-const TEXT = {
-  pt: {
-    nav_about: "Sobre",
-    nav_tech: "Tecnologias",
-    nav_projects: "Projetos",
-    nav_experience: "Experiência",
-    nav_recommendations: "Recomendações",
-    nav_contact: "Contato",
-    hero_subtitle: "Desenvolvedor full-stack de IA",
-    hero_pitch: "Construo APIs, automações e sistemas com IA que reduzem trabalho manual, aceleram operações e geram insights aplicáveis em produção.",
-    hero_kicker: "Produtos de IA end-to-end, do front ao back",
-    hero_side_title: "Certificações em destaque",
-    hero_side_note: "Foco em produtos de IA com arquitetura robusta, velocidade de execução e impacto real.",
-    next_section_label: "Próxima seção:",
-    interview_ia_button: "Entreviste minha IA",
-    courses_button: "Cursos & Certificações",
-    download_cv_button: "Baixar Currículo",
-    about_me_title: "Sobre Mim",
-    about_me_p1: "Desenvolvedor de IA na Dígitro Tecnologia e estudante de Sistemas de Informação na UFSC. Atuo com pesquisa, desenvolvimento e avaliação de modelos de linguagem, focando em soluções que geram impacto real em produtos e clientes.",
-    about_me_p2: "Tenho experiência em Python, FastAPI, machine learning, processamento de linguagem natural e visão computacional. Gosto de unir teoria e prática, construindo APIs, automações e ferramentas que ajudam pessoas e times a trabalharem melhor.",
-    tech_title: "Tecnologias",
-    tech_description: "Experiência prática com APIs REST usando Python, FastAPI e Django. Domínio em versionamento com Git, integração com bancos de dados (PostgreSQL e Oracle), e conhecimento em contêineres com Docker. Familiaridade com práticas de DevOps e stacks de IA, incluindo Scikit-learn, TensorFlow, PyTorch, OpenCV, pandas, NumPy, LangChain e spaCy, aplicando técnicas de machine learning, deep learning, processamento de linguagem natural e visão computacional em projetos práticos.",
-    projects_title: "Projetos",
-    featured_projects_title: "Projetos em destaque",
-    projects_ia_title: "IA & LLMs",
-    projects_other_title: "Outros projetos",
-    projects_backend_title: "Back-end & APIs",
-    projects_tools_title: "Ferramentas & Extensões",
-    projects_page_title: "Projetos em Destaque",
-    projects_page_subtitle: "Os 3 projetos principais com links diretos e resultados reais.",
-    all_projects_page_title: "Todos os Projetos",
-    all_projects_page_subtitle: "Lista completa dos demais projetos e iniciativas.",
-    view_all_projects_button: "Ver todos os projetos",
-    back_to_projects_button: "← Voltar para destaque",
-    open_projects_page_button: "Abrir página de projetos",
-    view_more_button: "Ver mais",
-    close_button: "Fechar",
-    in_dev_button: "Em desenvolvimento — peça detalhes",
-    experience_title: "Experiência Profissional",
-    recommendations_title: "Recomendações",
-    recommendation_source_prefix: "Recomendação feita pelo",
-    linkedin_source_label: "Ver recomendação no LinkedIn",
-    contact_title: "Contato",
-    contact_subtitle: "Vamos conversar! Entre em contato comigo através dos canais abaixo.",
-    contact_fab_label: "Fale comigo",
-    footer_text: "© 2026 Matheus Silvano. Todos os direitos reservados.",
-    chat_title: "Assistente Virtual",
-    chat_status: "Online",
-    chat_input_placeholder: "Digite sua pergunta...",
-    chat_cta_bubble: "Converse comigo!",
-    chat_initial_message: "Olá! 👋 Posso te ajudar com dúvidas sobre projetos, cursos e experiências.",
-    chat_q1: "Quais projetos mostram melhor sua experiência com back-end?",
-    chat_q2: "Como você usou LLMs na prática?",
-    chat_q3: "Você já trabalhou com Docker/MLOps em produção?",
-    courses_page_title: "Cursos & Certificações",
-    courses_page_subtitle: "Uma visão geral das trilhas de estudo que fortalecem minha base.",
-    back_to_portfolio_button: "← Voltar ao portfólio",
-    courses_main_title: "Formações & Trilhas",
-    cert_featured_label: "Destaques em IA",
-    cert_featured_title: "Certificações",
-    cert_featured_desc: "Badges verificados em IA generativa e uso responsável.",
-    validate_cert_button: "Validar certificação",
-    courses_intro: "Abaixo estão alguns dos cursos mais relevantes que concluí.",
-    courses_search_label: "Buscar cursos e certificações",
-    courses_search_placeholder: "Buscar por curso, instituição ou ano",
-    courses_search_empty: "Nenhum curso encontrado para sua busca.",
-    institution_label: "Instituição",
-    year_label: "Ano",
-    view_certificate_button: "Ver certificado",
-    view_mod1_button: "Ver Mod 01",
-    view_mod2_button: "Ver Mod 02",
-    course_star_label: "⭐ Mais relevante",
-    radar_title: "Stack Atual",
-    radar_proficient: "Tenho Proficiência",
-    radar_learning: "Estudando Agora",
-    radar_on_radar: "No Radar"
-  },
-  en: {
-    nav_about: "About", nav_tech: "Technologies", nav_projects: "Projects", nav_experience: "Experience", nav_recommendations: "Recommendations", nav_contact: "Contact",
-    hero_subtitle: "Full-stack AI Developer",
-    hero_pitch: "I build APIs, automations, and AI systems that reduce manual work, accelerate operations, and generate actionable insights in production.",
-    hero_kicker: "End-to-end AI products, from frontend to backend",
-    hero_side_title: "Highlighted certifications",
-    hero_side_note: "Focused on AI products with strong architecture, execution speed, and measurable impact.",
-    next_section_label: "Next section:",
-    interview_ia_button: "Interview my AI", courses_button: "Courses & Certifications", download_cv_button: "Download CV",
-    about_me_title: "About Me",
-    about_me_p1: "AI Developer at Dígitro Tecnologia and Information Systems student at UFSC. I work with research, development, and evaluation of language models, focused on solutions that generate real impact for products and clients.",
-    about_me_p2: "I have experience with Python, FastAPI, machine learning, natural language processing, and computer vision. I like combining theory and practice by building APIs, automations, and tools that help people and teams work better.",
-    tech_title: "Technologies",
-    tech_description: "Hands-on experience with REST APIs using Python, FastAPI, and Django. Strong command of version control with Git, database integration (PostgreSQL and Oracle), and containerization with Docker. Familiarity with DevOps practices and AI stacks, including Scikit-learn, TensorFlow, PyTorch, OpenCV, pandas, NumPy, LangChain, and spaCy, applying machine learning, deep learning, natural language processing, and computer vision techniques in practical projects.",
-    projects_title: "Projects", featured_projects_title: "Featured projects", projects_ia_title: "AI & LLMs", projects_other_title: "Other projects", projects_backend_title: "Back-end & APIs", projects_tools_title: "Tools & Extensions",
-    projects_page_title: "Featured Projects", projects_page_subtitle: "Top 3 projects with direct links and real outcomes.",
-    all_projects_page_title: "All Projects", all_projects_page_subtitle: "Complete list of the remaining projects and initiatives.",
-    view_all_projects_button: "View all projects", back_to_projects_button: "← Back to highlights", open_projects_page_button: "Open projects page",
-    view_more_button: "View more", close_button: "Close",
-    in_dev_button: "In development — ask for details", experience_title: "Professional Experience", recommendations_title: "Recommendations", recommendation_source_prefix: "Recommendation made on", linkedin_source_label: "View recommendation on LinkedIn",
-    contact_title: "Contact", contact_subtitle: "Let's talk! Feel free to reach out through the channels below so we can discuss ideas, projects, or opportunities.", contact_fab_label: "Contact me", footer_text: "© 2026 Matheus Silvano. All rights reserved.",
-    chat_title: "Virtual Assistant", chat_status: "Online", chat_input_placeholder: "Type your question...", chat_cta_bubble: "Talk to me!",
-    chat_initial_message: "Hi! 👋 I can help with questions about projects, courses and experience.", chat_q1: "Which projects best show your back-end experience?", chat_q2: "How have you used LLMs in practice?", chat_q3: "Have you worked with Docker/MLOps in production?",
-    courses_page_title: "Courses & Certifications", courses_page_subtitle: "An overview of the learning tracks that strengthen my technical foundation and support practical delivery.", back_to_portfolio_button: "← Back to portfolio",
-    courses_main_title: "Training & Tracks", cert_featured_label: "AI Highlights", cert_featured_title: "Certifications", cert_featured_desc: "Verified badges in generative AI and responsible use.", validate_cert_button: "Validate certification",
-    courses_intro: "Below are some of the most relevant courses I completed.", courses_search_label: "Search courses and certifications", courses_search_placeholder: "Search by course, provider or year", courses_search_empty: "No courses or certifications were found for your search.",
-    institution_label: "Institution", year_label: "Year", view_certificate_button: "View certificate", view_mod1_button: "View Mod 01", view_mod2_button: "View Mod 02", course_star_label: "⭐ Most relevant",
-    radar_title: "Current Stack", radar_proficient: "Areas Where I Have Proficiency", radar_learning: "Learning Now", radar_on_radar: "On My Radar"
-  },
-  es: {
-    nav_about: "Sobre", nav_tech: "Tecnologías", nav_projects: "Proyectos", nav_experience: "Experiencia", nav_recommendations: "Recomendaciones", nav_contact: "Contacto",
-    hero_subtitle: "Desarrollador full-stack de IA",
-    hero_pitch: "Construyo APIs, automatizaciones y sistemas de IA que reducen trabajo manual, aceleran operaciones y generan insights aplicables en producción.",
-    hero_kicker: "Productos de IA end-to-end, del front al back",
-    hero_side_title: "Certificaciones destacadas",
-    hero_side_note: "Enfoque en productos de IA con arquitectura sólida, velocidad de ejecución e impacto real.",
-    next_section_label: "Siguiente sección:",
-    interview_ia_button: "Entrevista a mi IA", courses_button: "Cursos y Certificaciones", download_cv_button: "Descargar CV",
-    about_me_title: "Sobre mí",
-    about_me_p1: "Desarrollador de IA en Dígitro Tecnologia y estudiante de Sistemas de Información en la UFSC. Actúo en investigación, desarrollo y evaluación de modelos de lenguaje, con foco en soluciones que generan impacto real en productos y clientes.",
-    about_me_p2: "Tengo experiencia con Python, FastAPI, machine learning, procesamiento de lenguaje natural y visión por computador. Me gusta unir teoría y práctica, construyendo APIs, automatizaciones y herramientas que ayudan a personas y equipos a trabajar mejor.",
-    tech_title: "Tecnologías",
-    tech_description: "Experiencia práctica con APIs REST usando Python, FastAPI y Django. Dominio de versionado con Git, integración con bases de datos (PostgreSQL y Oracle), y conocimiento de contenedores con Docker. Familiaridad con prácticas de DevOps y stacks de IA, incluyendo Scikit-learn, TensorFlow, PyTorch, OpenCV, pandas, NumPy, LangChain y spaCy, aplicando técnicas de machine learning, deep learning, procesamiento de lenguaje natural y visión por computador en proyectos prácticos.",
-    projects_title: "Proyectos", featured_projects_title: "Proyectos destacados", projects_ia_title: "IA & LLMs", projects_other_title: "Otros proyectos", projects_backend_title: "Back-end & APIs", projects_tools_title: "Herramientas y Extensiones",
-    projects_page_title: "Proyectos Destacados", projects_page_subtitle: "Los 3 proyectos principales con enlaces directos y resultados reales.",
-    all_projects_page_title: "Todos los Proyectos", all_projects_page_subtitle: "Lista completa de los demás proyectos e iniciativas.",
-    view_all_projects_button: "Ver todos los proyectos", back_to_projects_button: "← Volver a destacados", open_projects_page_button: "Abrir página de proyectos",
-    view_more_button: "Ver más", close_button: "Cerrar",
-    in_dev_button: "En desarrollo — pide detalles", experience_title: "Experiencia Profesional", recommendations_title: "Recomendaciones", recommendation_source_prefix: "Recomendación hecha en", linkedin_source_label: "Ver recomendación en LinkedIn",
-    contact_title: "Contacto", contact_subtitle: "Hablemos. Contáctame por los canales de abajo para conversar sobre ideas, proyectos u oportunidades.", contact_fab_label: "Habla conmigo", footer_text: "© 2026 Matheus Silvano. Todos los derechos reservados.",
-    chat_title: "Asistente Virtual", chat_status: "En línea", chat_input_placeholder: "Escribe tu pregunta...", chat_cta_bubble: "¡Habla conmigo!", chat_initial_message: "¡Hola! 👋 Puedo ayudarte con proyectos, cursos y experiencia.", chat_q1: "¿Qué proyectos muestran mejor tu experiencia en back-end?", chat_q2: "¿Cómo usaste LLMs en la práctica?", chat_q3: "¿Trabajaste con Docker/MLOps en producción?",
-    courses_page_title: "Cursos y Certificaciones", courses_page_subtitle: "Una visión general de las rutas de estudio que fortalecen mi base técnica y respaldan entregas prácticas.", back_to_portfolio_button: "← Volver al portafolio",
-    courses_main_title: "Formaciones y Rutas", cert_featured_label: "Destacados de IA", cert_featured_title: "Certificaciones", cert_featured_desc: "Insignias verificadas en IA generativa y uso responsable.", validate_cert_button: "Validar certificación",
-    courses_intro: "Abajo están algunos de los cursos más relevantes que completé.", courses_search_label: "Buscar cursos y certificaciones", courses_search_placeholder: "Buscar por curso, institución o año", courses_search_empty: "No se encontraron cursos ni certificaciones para tu búsqueda.",
-    institution_label: "Institución", year_label: "Año", view_certificate_button: "Ver certificado", view_mod1_button: "Ver Mód 01", view_mod2_button: "Ver Mód 02", course_star_label: "⭐ Más relevante",
-    radar_title: "Stack Actual", radar_proficient: "Áreas en las que tengo dominio", radar_learning: "Estudiando ahora", radar_on_radar: "En el radar"
-  }
-};
-
-const TECH_ICONS = [
-  "python", "fastapi", "javascript", "nodejs", "react", "vuejs", "postgresql", "oracle", "docker", "scikitlearn", "tensorflow", "pytorch"
-].map((name) => ({
-  src: `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${name}/${name}-original.svg`,
-  alt: name
-}));
 
 const PROJECTS = {
   featured: [
@@ -206,14 +59,13 @@ const PROJECTS = {
       impact: "Entrega funcional em 24h de hackathon com correção inteligente de redações.",
       contrib: "Responsável pela arquitetura backend (FastAPI), orquestração e avaliação de prompts.",
       stack: ["Python", "FastAPI", "PostgreSQL", "OpenAI"],
-      ask: "Gostaria de saber mais detalhes sobre o projeto Cognita Suite."
     },
     {
       title: "Toxic Content Detector",
       image: "/assets/images/projects/toxic-content-detector.png",
       desc: "Projeto de ML para detecção de comentários tóxicos com modelo treinado do zero em dataset próprio, usando NLP, regressão logística e TF-IDF.",
       details: "Modelo proprietário treinado do zero; pipeline dockerizado pronto para testes online.",
-      impact: "Modelo proprietário treinado do zero; pipeline dockerizado pronto para testes online.",
+      impact: "Pipeline dockerizado, pronto para testes online.",
       contrib: "Desenvolvi o pré-processamento, treino e deploy do modelo com avaliação contínua.",
       stack: ["Python", "Pandas", "Scikit-learn", "Streamlit", "Docker"],
       actions: [
@@ -229,7 +81,6 @@ const PROJECTS = {
       impact: "Fluxo fim a fim entregue em 54h de hackathon com agendamento automático.",
       contrib: "Liderei o backend e integrações com n8n/OpenAI, garantindo fluxo fim a fim em 54h de hackathon.",
       stack: ["Python", "FastAPI", "n8n", "OpenAI"],
-      ask: "Gostaria de saber mais detalhes sobre o projeto Sua Clínica."
     }
   ],
   backend: [
@@ -395,8 +246,8 @@ const COURSE_SECTIONS = [
     items: [
       { title: "Consciência em Segurança da Informação", institution: "AuditSafe", year: "2024", cert: "/assets/certificates/files/audit_safe_seguranca_da_info.jpeg", preview: "/assets/certificates/files/audit_safe_seguranca_da_info.jpeg" },
       { title: "Segurança da Informação - Módulos 01 e 02", institution: "Curso em Vídeo", year: "2024", preview: "/assets/certificates/files/previews/seguranca_da_informacao_modulo_01_20_horas_certificado_curso_em_video.png", multiActions: [
-        { labelKey: "view_mod1_button", href: "/assets/certificates/files/Seguranca-da-Informacao-Modulo-01-20-HORAS-Certificado-Curso-em-Video.pdf" },
-        { labelKey: "view_mod2_button", href: "/assets/certificates/files/Matheus-Silvano-Pereira-Seguranca-da-Informacao-Modulo-02-VIP-Certificado-Curso-em-Video.pdf" }
+        { labelKey: "view_mod1", href: "/assets/certificates/files/Seguranca-da-Informacao-Modulo-01-20-HORAS-Certificado-Curso-em-Video.pdf" },
+        { labelKey: "view_mod2", href: "/assets/certificates/files/Matheus-Silvano-Pereira-Seguranca-da-Informacao-Modulo-02-VIP-Certificado-Curso-em-Video.pdf" }
       ] }
     ]
   },
@@ -432,8 +283,25 @@ const COURSE_SECTIONS = [
 ];
 
 
+
+const BASE = import.meta.env.BASE_URL;
+const withBase = (value) => {
+  if (typeof value === "string") return value.startsWith("/assets/") ? BASE + value.slice(1) : value;
+  if (Array.isArray(value)) return value.map(withBase);
+  if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, withBase(v)]));
+  return value;
+};
+
 function t(lang, key) {
   return (TEXT[lang] && TEXT[lang][key]) || TEXT.pt[key] || key;
 }
 
-export { ASSETS, API_URL, TEXT, TECH_ICONS, PROJECTS, EXPERIENCE, RECOMMENDATIONS, CERT_BADGES, COURSE_SECTIONS, t };
+const data = withBase({ ASSETS, PROJECTS, EXPERIENCE, RECOMMENDATIONS, CERT_BADGES, COURSE_SECTIONS });
+const OPEN_SOURCE = [
+  { name: "kividb", url: "https://github.com/kividbio/kividb/pulls?q=is%3Apr+author%3Amatheussilvano+is%3Amerged", count: 9, key: "os_kividb" },
+  { name: "loopmark-agent", url: "https://github.com/loopmark-opensource/loopmark-agent/pull/57", count: 1, key: "os_loopmark" },
+  { name: "voyager", url: "https://github.com/voyager-browser/voyager/pull/95", count: 1, key: "os_voyager" },
+  { name: "penthera", url: "https://github.com/danoszz/penthera/pull/244", count: 1, key: "os_penthera" }
+];
+export const { ASSETS: assets, PROJECTS: projects, EXPERIENCE: experience, RECOMMENDATIONS: recommendations, CERT_BADGES: certBadges, COURSE_SECTIONS: courseSections } = data;
+export { TEXT, OPEN_SOURCE, t };
