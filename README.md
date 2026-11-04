@@ -1,12 +1,12 @@
 # Portfólio de Matheus Silvano
 
-Site pessoal em React + Vite, em português, inglês e espanhol, com tema claro e escuro.
+Site pessoal em React + Vite, em inglês (padrão), português e espanhol, com tema claro e escuro.
 
-Online em https://matheussilvano.github.io/matheus-silvano/
+Online em https://matheussilvano.github.io/
 
 ## Páginas
 
-- `index.html`: apresentação, stack, projetos, open source, experiência, recomendações e contato.
+- `index.html`: apresentação, stack, projetos principais, contribuições open source, experiência, recomendações e contato.
 - `all-projects.html`: lista completa de projetos.
 - `cursos.html`: cursos e certificações, com busca.
 
@@ -26,7 +26,7 @@ npm install
 npm run dev
 ```
 
-Build de produção: `npm run build` (use `BASE_PATH=/matheus-silvano/` para simular o GitHub Pages).
+Build de produção: `npm run build` (o site é servido na raiz do domínio).
 
 ## Deploy
 

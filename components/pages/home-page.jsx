@@ -1,146 +1,313 @@
-import { useState } from "react";
-import { assets, projects, experience, recommendations, OPEN_SOURCE, t } from "../../data/site-data.js";
-import { SiteHeader, SiteFooter, Contours } from "../layout.jsx";
-import { ProjectRow, ProjectModal } from "../cards.jsx";
+import { useEffect, useState } from "react";
+import { ASSETS, TECH_ICONS, PROJECTS, OPEN_SOURCE, EXPERIENCE, RECOMMENDATIONS, t } from "../../data/site-data.js";
+import { useReveal } from "../../hooks/use-reveal.js";
+import { useCardTilt } from "../../hooks/use-card-tilt.js";
+import { Controls, Footer, ScrollArrow } from "../layout.jsx";
+import { ProjectDetailsModal } from "../cards.jsx";
+  const TECH_HIGHLIGHTS = [
+    "PostgreSQL",
+    "Scikit-learn",
+    "TensorFlow",
+    "LangChain",
+    "machine learning",
+    "deep learning",
+    "processamento de linguagem natural",
+    "natural language processing",
+    "procesamiento de lenguaje natural",
+    "visão computacional",
+    "computer vision",
+    "visión por computador",
+    "FastAPI",
+    "Django",
+    "Python",
+    "Docker",
+    "PyTorch",
+    "OpenCV",
+    "pandas",
+    "NumPy",
+    "spaCy",
+    "DevOps",
+    "Oracle",
+    "Git"
+  ];
+  const TECH_HIGHLIGHT_MAP = new Set(TECH_HIGHLIGHTS.map((item) => item.toLowerCase()));
+  const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const TECH_HIGHLIGHT_REGEX = new RegExp(`(${TECH_HIGHLIGHTS.map(escapeRegExp).join("|")})`, "gi");
 
-const STACK = [
-  ["stack_backend", ["Python", "FastAPI", "Django", "REST", "Node.js"]],
-  ["stack_ai", ["LLMs e RAG", "LangChain", "MCP", "scikit-learn", "TensorFlow", "PyTorch", "spaCy", "OpenCV"]],
-  ["stack_data", ["PostgreSQL", "Oracle", "pandas", "NumPy"]],
-  ["stack_infra", ["Docker", "Git", "GitLab CI", "Linux"]],
-  ["stack_front", ["React", "JavaScript", "Vue"]]
-];
+  function highlightTechText(text) {
+    return text.split(TECH_HIGHLIGHT_REGEX).map((chunk, index) => {
+      if (!TECH_HIGHLIGHT_MAP.has(chunk.toLowerCase())) return chunk;
+      return <strong key={`tech-highlight-${index}`} className="tech-emphasis">{chunk}</strong>;
+    });
+  }
 
-export function PortfolioPage({ lang, setLang, dark, setDark }) {
-  const [open, setOpen] = useState(null);
-  const links = ["about", "projects", "opensource", "experience", "contact"].map((id) => ({ id, label: t(lang, `nav_${id}`) }));
+  export function PortfolioPage({ lang, setLang, dark, setDark }) {
+    useReveal();
+    useCardTilt();
+    const [recIndex, setRecIndex] = useState(0);
+    const [activeSection, setActiveSection] = useState("about");
+    const [featuredModalProject, setFeaturedModalProject] = useState(null);
+    const currentRec = RECOMMENDATIONS[recIndex];
+    const sectionIds = ["about", "tech", "projects", "opensource", "experience", "recommendations", "contact"];
+    const navItems = [
+      { id: "about", label: t(lang, "nav_about") },
+      { id: "tech", label: t(lang, "nav_tech") },
+      { id: "projects", label: t(lang, "nav_projects") },
+      { id: "opensource", label: t(lang, "nav_opensource") },
+      { id: "experience", label: t(lang, "nav_experience") },
+      { id: "recommendations", label: t(lang, "nav_recommendations") },
+      { id: "contact", label: t(lang, "nav_contact") }
+    ];
 
-  return (
-    <>
-      <a className="skip-link" href="#main">Pular para o conteúdo</a>
-      <SiteHeader lang={lang} setLang={setLang} dark={dark} setDark={setDark} links={links} />
+    const getHeaderOffset = () => {
+      const isMobile = window.matchMedia("(max-width: 768px)").matches;
+      const varName = isMobile ? "--header-clearance-mobile" : "--header-clearance";
+      return (parseFloat(getComputedStyle(document.documentElement).getPropertyValue(varName)) || 132) + 12;
+    };
 
-      <section className="hero">
-        <Contours />
-        <div className="hero-inner">
-          <div className="hero-text">
-            <p className="hero-role">{t(lang, "hero_role")}</p>
-            <h1>Matheus Silvano</h1>
-            <p className="hero-pitch">{t(lang, "hero_pitch")}</p>
-            <div className="actions">
-              <a href={lang === "en" || lang === "es" ? assets.cvEn : assets.cvPt} download className="btn btn-primary">{t(lang, "cv_button")}</a>
-              <a href="https://github.com/matheussilvano" target="_blank" rel="noopener" className="btn">GitHub</a>
-              <a href="https://www.linkedin.com/in/matheussilvano/" target="_blank" rel="noopener" className="btn">LinkedIn</a>
-            </div>
-          </div>
-          <img className="hero-photo" src={assets.profile} alt="Matheus Silvano falando ao microfone em um evento" width="320" height="320" />
-        </div>
-      </section>
+    const navigateToSection = (event, id) => {
+      event.preventDefault();
+      const target = document.getElementById(id);
+      if (!target) return;
 
-      <main id="main">
-        <section id="about" className="section">
-          <h2>{t(lang, "about_title")}</h2>
-          <div className="about-grid">
-            <div className="prose">
-              <p>{t(lang, "about_p1")}</p>
-              <p>{t(lang, "about_p2")}</p>
-              <p><a className="text-link" href="cursos.html">{t(lang, "courses_button")}</a></p>
-            </div>
-            <dl className="stack">
-              {STACK.map(([key, items]) => (
-                <div key={key}>
-                  <dt>{t(lang, key)}</dt>
-                  <dd>{items.join(", ")}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </section>
+      const offset = getHeaderOffset();
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      setActiveSection(id);
 
-        <section id="projects" className="section">
-          <h2>{t(lang, "projects_title")}</h2>
-          <p className="section-hint">{t(lang, "featured_hint")}</p>
-          <ul className="project-list">
-            {projects.featured.map((p) => {
-              const details = projects.all.find((x) => x.title === p.title) || p;
-              return <ProjectRow key={p.title} lang={lang} large project={{ ...details, ...p, stack: details.stack }} onOpen={() => setOpen(details)} />;
-            })}
-          </ul>
-          <p><a className="text-link" href="all-projects.html">{t(lang, "view_all_projects")}</a></p>
-        </section>
+      window.scrollTo({ top, behavior: "smooth" });
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, "", `#${id}`);
+      }
+    };
 
-        <section id="opensource" className="section">
-          <h2>{t(lang, "os_title")}</h2>
-          <p className="section-hint">{t(lang, "os_intro")}</p>
-          <ul className="os-list">
-            {OPEN_SOURCE.map((o) => (
-              <li key={o.name}>
-                <a href={o.url} target="_blank" rel="noopener">
-                  <span className="os-name">{o.name}</span>
-                  <span className="os-text">{t(lang, o.key)}</span>
-                  <span className="os-count">{o.count} {t(lang, o.count === 1 ? "os_pr" : "os_prs")}</span>
+    const getProjectDetailsByTitle = (title) => PROJECTS.all.find((project) => project.title === title) || PROJECTS.featured.find((project) => project.title === title) || null;
+
+    useEffect(() => {
+      const sectionNodes = sectionIds
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
+
+      if (!sectionNodes.length) return undefined;
+
+      let rafId = 0;
+      let ticking = false;
+
+      const updateActiveSectionFromScroll = () => {
+        const anchorLine = window.scrollY + getHeaderOffset() + 8;
+        let nextActive = sectionIds[0];
+
+        sectionNodes.forEach((section) => {
+          if (anchorLine >= section.offsetTop) {
+            nextActive = section.id;
+          }
+        });
+
+        setActiveSection((prev) => (prev === nextActive ? prev : nextActive));
+      };
+
+      const queueScrollUpdate = () => {
+        if (ticking) return;
+        ticking = true;
+        rafId = window.requestAnimationFrame(() => {
+          updateActiveSectionFromScroll();
+          ticking = false;
+        });
+      };
+
+      const syncFromHash = () => {
+        const hashSection = window.location.hash.replace("#", "").trim();
+        if (hashSection && sectionIds.includes(hashSection)) {
+          setActiveSection(hashSection);
+        } else {
+          updateActiveSectionFromScroll();
+        }
+      };
+
+      syncFromHash();
+      window.addEventListener("scroll", queueScrollUpdate, { passive: true });
+      window.addEventListener("resize", queueScrollUpdate);
+      window.addEventListener("hashchange", syncFromHash);
+
+      return () => {
+        window.removeEventListener("scroll", queueScrollUpdate);
+        window.removeEventListener("resize", queueScrollUpdate);
+        window.removeEventListener("hashchange", syncFromHash);
+        if (rafId) {
+          window.cancelAnimationFrame(rafId);
+        }
+      };
+    }, []);
+
+    return (
+      <>
+        <nav className="top-nav">
+          <ul>
+            {navItems.map((item) => (
+              <li key={item.id}>
+                <a href={`#${item.id}`} className={activeSection === item.id ? "active" : ""} onClick={(event) => navigateToSection(event, item.id)}>
+                  {item.label}
                 </a>
               </li>
             ))}
           </ul>
-        </section>
+        </nav>
 
-        <section id="experience" className="section">
-          <h2>{t(lang, "experience_title")}</h2>
-          <ol className="timeline">
-            {experience.map((e) => (
-              <li key={e.title}>
-                <p className="when">{e.date}</p>
-                <div>
-                  <h3>{e.title}</h3>
-                  <ul>{e.bullets.map((b) => <li key={b}>{b}</li>)}</ul>
+        <Controls lang={lang} setLang={setLang} dark={dark} setDark={setDark} />
+
+        <header className="hero">
+          <div className="hero-bg-orb hero-bg-orb-a" aria-hidden="true"></div>
+          <div className="hero-bg-orb hero-bg-orb-b" aria-hidden="true"></div>
+
+          <div className="hero-content">
+            <div className="hero-layout">
+              <div className="hero-copy">
+                <p className="hero-kicker">{t(lang, "hero_kicker")}</p>
+                <h1 className="hero-title">Matheus Silvano</h1>
+                <p className="hero-subtitle">{t(lang, "hero_subtitle")}</p>
+                <p className="hero-pitch">{t(lang, "hero_pitch")}</p>
+                <div className="hero-buttons">
+                  <a href="https://github.com/matheussilvano" target="_blank" rel="noopener" className="btn btn-secondary">GitHub</a>
+                  <a href="https://www.linkedin.com/in/matheussilvano/" target="_blank" rel="noopener" className="btn btn-secondary">LinkedIn</a>
+                  <a href="cursos.html" className="btn btn-secondary">{t(lang, "courses_button")}</a>
+                  <a href={lang === "en" ? ASSETS.cvEn : ASSETS.cvPt} download className="btn btn-primary">{t(lang, "download_cv_button")}</a>
                 </div>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        <section id="recommendations" className="section">
-          <h2>{t(lang, "recommendations_title")}</h2>
-          <div className="quotes">
-            {recommendations.map((r) => {
-              const paragraphs = r.text.split("\n\n");
-              const long = r.text.length > 520;
-              return (
-                <figure key={r.name} className="quote">
-                  <blockquote>
-                    {long ? (
-                      <details>
-                        <summary>{r.text.slice(0, 260).trim()}… <span>{t(lang, "read_more")}</span></summary>
-                        {paragraphs.map((p) => <p key={p.slice(0, 30)}>{p}</p>)}
-                      </details>
-                    ) : <p>{r.text}</p>}
-                  </blockquote>
-                  <figcaption>
-                    <img src={r.image} alt="" loading="lazy" width="44" height="44" />
-                    <span><strong>{r.name}</strong><br />{r.role}</span>
-                  </figcaption>
-                </figure>
-              );
-            })}
+              </div>
+              <aside className="hero-side reveal">
+                <h3>{t(lang, "hero_side_title")}</h3>
+                <div className="hero-badges">
+                  <div className="badge-strip hero-badge-strip">
+                    <a className="badge-icon" href="https://credentials.databricks.com/7e1cd27a-b050-4d11-91c3-150c23fa985b" target="_blank" rel="noopener"><img src="/assets/certificates/badges/databricks_gerative_ai_fundamentals.png" alt="Databricks badge" /></a>
+                    <a className="badge-icon" href="https://www.coursera.org/account/accomplishments/specialization/5QI99HXISLFA" target="_blank" rel="noopener"><img src="/assets/certificates/badges/badge_google_essencials_ai.png" alt="Google badge" /></a>
+                  </div>
+                </div>
+                <p>{t(lang, "hero_side_note")}</p>
+              </aside>
+            </div>
           </div>
-          <p><a className="text-link" href="https://www.linkedin.com/in/matheussilvano/" target="_blank" rel="noopener">{t(lang, "rec_source")}</a></p>
-        </section>
+          <ScrollArrow href="#about" label={t(lang, "nav_about")} prompt={t(lang, "next_section_label")} />
+        </header>
 
-        <section id="contact" className="section contact">
-          <h2>{t(lang, "contact_title")}</h2>
-          <p className="section-hint">{t(lang, "contact_intro")}</p>
-          <a className="big-link" href="mailto:matheussilvano2005@gmail.com">matheussilvano2005@gmail.com</a>
-          <ul className="contact-links">
-            <li><a href="https://wa.me/5548998584035" target="_blank" rel="noopener">WhatsApp</a></li>
-            <li><a href="https://www.linkedin.com/in/matheussilvano/" target="_blank" rel="noopener">LinkedIn</a></li>
-            <li><a href="https://github.com/matheussilvano" target="_blank" rel="noopener">GitHub</a></li>
-          </ul>
-        </section>
-      </main>
+        <main>
+          <section id="about" className="section section-fullpage">
+            <div className="container about-content">
+              <div className="about-image-container reveal"><img loading="lazy" src={ASSETS.profile} alt="Foto Matheus" /></div>
+              <div className="about-text-container">
+                <h2 className="section-title reveal">{t(lang, "about_me_title")}</h2>
+                <p className="reveal">{t(lang, "about_me_p1")}</p>
+                <p className="reveal">{t(lang, "about_me_p2")}</p>
+              </div>
+            </div>
+            <ScrollArrow href="#tech" label={t(lang, "nav_tech")} inline prompt={t(lang, "next_section_label")} />
+          </section>
 
-      <SiteFooter lang={lang} />
-      <ProjectModal lang={lang} project={open} onClose={() => setOpen(null)} />
-    </>
-  );
-}
+          <section id="tech" className="section">
+            <div className="container">
+              <h2 className="section-title reveal">{t(lang, "tech_title")}</h2>
+              <div className="tech-carousel-container reveal"><div className="tech-carousel-slider"><div className="tech-slide-track">{TECH_ICONS.concat(TECH_ICONS).map((i, idx) => <div key={`${i.alt}-${idx}`} className="tech-slide"><img src={i.src} alt={i.alt} /></div>)}</div></div></div>
+              <div className="tech-description-card reveal">
+                <p className="tech-description">{highlightTechText(t(lang, "tech_description"))}</p>
+              </div>
+            </div>
+            <ScrollArrow href="#projects" label={t(lang, "nav_projects")} inline prompt={t(lang, "next_section_label")} />
+          </section>
+
+          <div className="container">
+            <section id="projects" className="section">
+              <h2 className="section-title reveal">{t(lang, "projects_title")}</h2>
+              <div className="featured-projects reveal">
+                <h3>{t(lang, "featured_projects_title")}</h3>
+                <div className="featured-grid">
+                  {PROJECTS.featured.map((p) => (
+                    <div className="featured-card card reveal" key={p.title}>
+                      <img src={p.image} alt={p.title} className="featured-image" />
+                      <h4>{p.title}</h4>
+                      <p>{p.desc}</p>
+                      <div className="card-actions">
+                        <a href={p.href} target="_blank" rel="noopener" className={`btn ${p.primary ? "btn-primary" : "btn-secondary"}`}>{p.btn}</a>
+                        {p.github && p.github !== p.href ? <a href={p.github} target="_blank" rel="noopener" className="btn btn-secondary">{t(lang, "github_button")}</a> : null}
+                        <button className="btn btn-secondary" type="button" onClick={() => setFeaturedModalProject(getProjectDetailsByTitle(p.title))}>{t(lang, "view_more_button")}</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="card-actions" style={{ justifyContent: "center" }}>
+                  <a href="all-projects.html" className="btn btn-primary">{t(lang, "view_all_projects_button")}</a>
+                </div>
+              </div>
+              <ScrollArrow href="#opensource" label={t(lang, "nav_opensource")} inline prompt={t(lang, "next_section_label")} />
+            </section>
+
+            <section id="opensource" className="section">
+              <h2 className="section-title reveal">{t(lang, "os_title")}</h2>
+              <p className="contact-subtitle reveal">{t(lang, "os_intro")}</p>
+              <div className="os-list">
+                {OPEN_SOURCE.map((o) => (
+                  <div className="os-item reveal" key={o.repo}>
+                    <h3><a href={`https://github.com/${o.repo}`} target="_blank" rel="noopener">{o.repo}</a><span className="os-count">{o.prs.length} {t(lang, o.prs.length === 1 ? "os_pr" : "os_prs")}</span></h3>
+                    <ul>
+                      {o.prs.map(([n, title]) => <li key={n}><a href={`https://github.com/${o.repo}/pull/${n}`} target="_blank" rel="noopener">{title} <span>#{n}</span></a></li>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <ScrollArrow href="#experience" label={t(lang, "nav_experience")} inline prompt={t(lang, "next_section_label")} />
+            </section>
+
+            <section id="experience" className="section">
+              <h2 className="section-title reveal">{t(lang, "experience_title")}</h2>
+              <div className="timeline">{EXPERIENCE.map((e) => <div className="timeline-item reveal" key={e.title}><div className="timeline-content"><span className="timeline-date">{e.date}</span><h3>{e.title}</h3><ul className="timeline-list">{e.bullets.map((b) => <li key={`${e.title}-${b}`}>{b}</li>)}</ul></div></div>)}</div>
+              <ScrollArrow href="#recommendations" label={t(lang, "nav_recommendations")} inline prompt={t(lang, "next_section_label")} />
+            </section>
+
+            <section id="recommendations" className="section">
+              <h2 className="section-title reveal">{t(lang, "recommendations_title")}</h2>
+              <div className="carousel-container reveal">
+                <div className="carousel-track">
+                  <div className="carousel-card active">
+                    <img src={currentRec.image} alt={currentRec.name} className="carousel-avatar" />
+                    <h3>{currentRec.name}</h3>
+                    <p className="role">{currentRec.role}</p>
+                    <p className="text">"{currentRec.text}"</p>
+                    <p className="recommendation-source">
+                      <span>{t(lang, "recommendation_source_prefix")}</span>
+                      <a href={currentRec.sourceUrl || "https://www.linkedin.com/in/matheussilvano/"} target="_blank" rel="noopener" className="linkedin-source-link" aria-label={t(lang, "linkedin_source_label")} title={t(lang, "linkedin_source_label")}>
+                        <i className="fab fa-linkedin" aria-hidden="true"></i>
+                        <span className="sr-text">LinkedIn</span>
+                      </a>
+                    </p>
+                  </div>
+                </div>
+                <div className="carousel-buttons">
+                  <button className="carousel-button prev" onClick={() => setRecIndex((i) => (i - 1 + RECOMMENDATIONS.length) % RECOMMENDATIONS.length)}>&#10094;</button>
+                  <button className="carousel-button next" onClick={() => setRecIndex((i) => (i + 1) % RECOMMENDATIONS.length)}>&#10095;</button>
+                </div>
+              </div>
+              <ScrollArrow href="#contact" label={t(lang, "nav_contact")} inline prompt={t(lang, "next_section_label")} />
+            </section>
+
+            <section id="contact" className="section">
+              <h2 className="section-title reveal">{t(lang, "contact_title")}</h2>
+              <p className="contact-subtitle reveal">{t(lang, "contact_subtitle")}</p>
+              <div className="contact-links">
+                <a href="mailto:matheussilvano2005@gmail.com" className="contact-item reveal"><i className="fas fa-envelope"></i><span>matheussilvano2005@gmail.com</span></a>
+                <a href="https://wa.me/5548998584035" target="_blank" rel="noopener" className="contact-item reveal"><i className="fab fa-whatsapp"></i><span>(48) 99858-4035</span></a>
+                <a href="https://www.linkedin.com/in/matheussilvano/" target="_blank" rel="noopener" className="contact-item reveal"><i className="fab fa-linkedin"></i><span>LinkedIn</span></a>
+              </div>
+            </section>
+          </div>
+        </main>
+
+        <button className="contact-fab" id="contactFab" aria-label={t(lang, "contact_fab_label")} onClick={() => {
+          const isMobile = window.innerWidth < 768;
+          window.open(isMobile ? "https://wa.me/5548998584035" : "mailto:matheussilvano2005@gmail.com", "_blank", "noopener");
+        }}>
+          <i className="fa-solid fa-paper-plane"></i>
+          <span className="sr-text">{t(lang, "contact_fab_label")}</span>
+        </button>
+
+        <ProjectDetailsModal lang={lang} project={featuredModalProject} open={Boolean(featuredModalProject)} onClose={() => setFeaturedModalProject(null)} />
+
+        <Footer lang={lang} />
+      </>
+    );
+  }

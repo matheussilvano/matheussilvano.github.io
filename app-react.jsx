@@ -5,12 +5,26 @@ import { CoursesPage } from "./components/pages/courses-page.jsx";
 import { AllProjectsPage } from "./components/pages/all-projects-page.jsx";
 import "./style.css";
 
-const PAGES = { home: PortfolioPage, courses: CoursesPage, "all-projects": AllProjectsPage };
+function AppRouter() {
+  const { lang, setLang, dark, setDark } = useSiteState();
+  const page = document.body.dataset.page || "home";
+  const pageProps = { lang, setLang, dark, setDark };
 
-function App() {
-  const state = useSiteState();
-  const Page = PAGES[document.body.dataset.page] || PortfolioPage;
-  return <Page {...state} />;
+  if (page === "courses") {
+    return <><CoursesPage {...pageProps} /></>;
+  }
+
+  if (page === "all-projects") {
+    return <><AllProjectsPage {...pageProps} /></>;
+  }
+
+  return <><PortfolioPage {...pageProps} /></>;
 }
 
-createRoot(document.getElementById("app-root")).render(<App />);
+const rootElement = document.getElementById("app-root");
+
+if (!rootElement) {
+  throw new Error("Elemento #app-root não encontrado.");
+}
+
+createRoot(rootElement).render(<AppRouter />);
