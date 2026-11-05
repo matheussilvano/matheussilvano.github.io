@@ -1973,3 +1973,72 @@ body.chat-fullscreen-open {
 .featured-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (max-width: 720px) { .featured-grid { grid-template-columns: 1fr; } }
 .featured-image { aspect-ratio: 2 / 1; height: auto; object-fit: cover; }
+
+/* ---- Mobile polish ---- */
+@media (max-width: 768px) {
+  html, body { overflow-x: hidden; }
+  .top-nav {
+    scroll-snap-type: x proximity;
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 28px), transparent);
+    scroll-padding: 0 1rem;
+  }
+  .top-nav li { scroll-snap-align: center; }
+  .top-nav ul { padding-right: 1.6rem; }
+  .header-controls { top: 3.9rem; }
+
+  .hero { padding-top: 7.4rem; padding-bottom: 2rem; min-height: 0; }
+  .hero-layout { gap: .9rem; }
+  .hero-kicker { font-size: .68rem; letter-spacing: .08em; line-height: 1.5; }
+  .hero-title { font-size: clamp(2.1rem, 11vw, 3rem); line-height: 1.02; }
+  .hero-subtitle { margin-bottom: .6rem; }
+  .hero-pitch { margin-bottom: 1.1rem; }
+  .hero-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+  .hero-buttons .btn { width: 100%; justify-content: center; padding: .7rem .6rem; font-size: .92rem; }
+  .hero-buttons .btn:nth-child(n+3) { grid-column: 1 / -1; }
+  .hero-side { padding: .9rem; }
+  .hero-side h3 { font-size: 1rem; }
+  .hero-side p { font-size: .9rem; }
+  .badge-icon { width: 64px; height: 64px; }
+
+  .section { padding: 2.6rem 0; }
+  .section-title { margin-bottom: 1rem; }
+  .about-content { grid-template-columns: 1fr; gap: 1.1rem; padding: 1rem; }
+  .about-image-container { max-width: 220px; margin: 0 auto; }
+  .tech-description-card { padding: 1rem; }
+  .tech-description { font-size: .98rem; line-height: 1.65; }
+
+  .featured-projects { padding: .8rem; }
+  .featured-card { padding: .75rem; }
+  .featured-card .card-actions, .card-actions { gap: .5rem; }
+  .card-actions .btn { flex: 1 1 auto; justify-content: center; }
+
+  .os-card > a { padding: 1rem; }
+  .os-card > a:hover { transform: none; }
+
+  .timeline-content { padding: .9rem; }
+  .timeline-content h3 { font-size: 1.1rem; }
+  .carousel-container { padding: .9rem; }
+  .carousel-card .text { font-size: .98rem; line-height: 1.6; }
+  .contact-links { gap: .6rem; }
+  .contact-item { padding: .85rem 1rem; word-break: break-word; }
+  .contact-fab { width: 48px; height: 48px; left: auto; right: .8rem; bottom: .8rem; }
+  .footer { padding-bottom: 5rem; }
+
+  .project-modal-overlay { padding: .5rem; }
+  .courses-search-box input { font-size: 16px; }
+}
+@media (max-width: 380px) {
+  .top-nav a { padding: .42rem .6rem; font-size: .78rem; }
+  .hero-buttons { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .header-controls { transition: transform .25s ease, opacity .25s ease; }
+  .header-controls.is-hidden { transform: translateY(-140%); opacity: 0; pointer-events: none; }
+}
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) { .header-controls { transition: none; } }
+@media (max-width: 560px) {
+  .certificate-thumb { min-height: 0; aspect-ratio: 16 / 8; margin-bottom: .5rem; }
+  .project-grid.course-panel .card-content { padding: .75rem; }
+  .project-grid.course-panel .card-title { font-size: 1rem; }
+}

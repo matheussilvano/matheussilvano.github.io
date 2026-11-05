@@ -50,7 +50,7 @@ try {
       lastMerged: when
     });
   }
-  projects.sort((a, b) => b.lastMerged.localeCompare(a.lastMerged));
+  projects.sort((a, b) => b.stars - a.stars || b.lastMerged.localeCompare(a.lastMerged));
   writeFileSync(OUT, JSON.stringify(projects, null, 2) + "\n");
   console.log(`open-source.json: ${projects.length} projects`);
 } catch (err) {

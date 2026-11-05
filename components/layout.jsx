@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { ASSETS, t } from "../data/site-data.js";
 
   function getHeaderOffset() {
@@ -23,8 +24,23 @@ import { ASSETS, t } from "../data/site-data.js";
   }
 
   export function Controls({ lang, setLang, dark, setDark }) {
+    const [hidden, setHidden] = useState(false);
+
+    // On phones the controls hide while scrolling down and return on scroll up.
+    useEffect(() => {
+      let lastY = window.scrollY;
+      const onScroll = () => {
+        const y = window.scrollY;
+        if (Math.abs(y - lastY) < 6) return;
+        setHidden(y > 90 && y > lastY);
+        lastY = y;
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      return () => window.removeEventListener("scroll", onScroll);
+    }, []);
+
     return (
-      <div className="header-controls">
+      <div className={`header-controls ${hidden ? "is-hidden" : ""}`}>
         <div className="language-selector" id="languageSelector">
           <img src={ASSETS.flagPt} alt="Bandeira do Brasil" className={`lang-flag ${lang === "pt" ? "active" : ""}`} onClick={() => setLang("pt")} />
           <img src={ASSETS.flagEn} alt="Bandeira Reino Unido" className={`lang-flag ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} />

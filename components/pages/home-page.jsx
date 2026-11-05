@@ -87,6 +87,13 @@ import { ProjectDetailsModal } from "../cards.jsx";
     const getProjectDetailsByTitle = (title) => PROJECTS.all.find((project) => project.title === title) || PROJECTS.featured.find((project) => project.title === title) || null;
 
     useEffect(() => {
+      const activeLink = document.querySelector(".top-nav a.active");
+      if (activeLink && window.matchMedia("(max-width: 768px)").matches) {
+        activeLink.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+      }
+    }, [activeSection]);
+
+    useEffect(() => {
       const sectionNodes = sectionIds
         .map((id) => document.getElementById(id))
         .filter(Boolean);
@@ -105,6 +112,10 @@ import { ProjectDetailsModal } from "../cards.jsx";
             nextActive = section.id;
           }
         });
+
+        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+          nextActive = sectionIds[sectionIds.length - 1];
+        }
 
         setActiveSection((prev) => (prev === nextActive ? prev : nextActive));
       };
