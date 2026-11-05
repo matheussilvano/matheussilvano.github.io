@@ -43,7 +43,10 @@ try {
       repo: info.full_name,
       url: info.html_url,
       description: description.length > 150 ? `${description.slice(0, 147).trimEnd()}...` : description,
+      owner: info.owner.login,
+      avatar: info.owner.avatar_url,
       language: info.language || "",
+      stars: info.stargazers_count,
       lastMerged: when
     });
   }

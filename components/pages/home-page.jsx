@@ -5,6 +5,7 @@ import { useCardTilt } from "../../hooks/use-card-tilt.js";
 import { Controls, Footer, ScrollArrow } from "../layout.jsx";
 import openSource from "../../data/open-source.json";
 import { ProjectDetailsModal } from "../cards.jsx";
+  const LANG_COLORS = { Rust: "#dea584", Python: "#3572a5", JavaScript: "#f1e05a", TypeScript: "#3178c6", Go: "#00add8", Java: "#b07219", "C++": "#f34b7d", C: "#555555", Ruby: "#701516", Shell: "#89e051", HTML: "#e34c26", CSS: "#563d7c" };
   const TECH_HIGHLIGHTS = [
     "PostgreSQL",
     "Scikit-learn",
@@ -48,7 +49,9 @@ import { ProjectDetailsModal } from "../cards.jsx";
     const [recIndex, setRecIndex] = useState(0);
     const [activeSection, setActiveSection] = useState("about");
     const [featuredModalProject, setFeaturedModalProject] = useState(null);
-    const currentRec = RECOMMENDATIONS[recIndex];
+    const baseRec = RECOMMENDATIONS[recIndex];
+    const translated = lang !== "pt" && baseRec.i18n && baseRec.i18n[lang];
+    const currentRec = { ...baseRec, ...(translated || {}) };
     const sectionIds = ["about", "tech", "projects", "opensource", "experience", "recommendations", "contact"];
     const navItems = [
       { id: "about", label: t(lang, "nav_about") },
@@ -241,12 +244,23 @@ import { ProjectDetailsModal } from "../cards.jsx";
             <section id="opensource" className="section">
               <h2 className="section-title reveal">{t(lang, "os_title")}</h2>
               <p className="contact-subtitle reveal">{t(lang, "os_intro")}</p>
-              <ul className="os-list">
+              <ul className="os-grid">
                 {openSource.map((o) => (
-                  <li className="os-item reveal" key={o.repo}>
+                  <li className="os-card reveal" key={o.repo}>
                     <a href={o.url} target="_blank" rel="noopener">
-                      <span className="os-name">{o.repo}</span>
-                      {o.description ? <span className="os-desc">{o.description}</span> : null}
+                      <div className="os-head">
+                        <img src={o.avatar} alt="" width="44" height="44" loading="lazy" className="os-avatar" />
+                        <div>
+                          <span className="os-owner">{o.owner}</span>
+                          <h3 className="os-name">{o.repo.split("/")[1]}</h3>
+                        </div>
+                        <i className="fa-solid fa-arrow-up-right-from-square os-open" aria-hidden="true"></i>
+                      </div>
+                      <p className="os-desc">{o.description || "\u00a0"}</p>
+                      <div className="os-meta">
+                        {o.language ? <span className="os-lang"><span className="os-dot" style={{ background: LANG_COLORS[o.language] || "var(--brand)" }}></span>{o.language}</span> : <span></span>}
+                        {o.stars ? <span className="os-stars"><i className="fa-regular fa-star" aria-hidden="true"></i> {o.stars.toLocaleString()}</span> : null}
+                      </div>
                     </a>
                   </li>
                 ))}
@@ -269,6 +283,7 @@ import { ProjectDetailsModal } from "../cards.jsx";
                     <h3>{currentRec.name}</h3>
                     <p className="role">{currentRec.role}</p>
                     <p className="text">"{currentRec.text}"</p>
+                    {translated ? <p className="rec-translated">{t(lang, "rec_translated")}</p> : null}
                     <p className="recommendation-source">
                       <span>{t(lang, "recommendation_source_prefix")}</span>
                       <a href={currentRec.sourceUrl || "https://www.linkedin.com/in/matheussilvano/"} target="_blank" rel="noopener" className="linkedin-source-link" aria-label={t(lang, "linkedin_source_label")} title={t(lang, "linkedin_source_label")}>

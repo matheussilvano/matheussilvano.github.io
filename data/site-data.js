@@ -11,7 +11,7 @@ const ASSETS = {
 
 const TEXT = {
   pt: {
-    nav_opensource: "Open source", os_title: "Open source", os_intro: "Projetos de outras pessoas em que tenho pull requests aceitos. Esta lista se atualiza sozinha.", github_button: "Código no GitHub", nav_about: "Sobre",
+    rec_translated: "Texto original em português.", nav_opensource: "Open source", os_title: "Open source", os_intro: "Projetos de outras pessoas em que tenho pull requests aceitos. Esta lista se atualiza sozinha.", github_button: "Código no GitHub", nav_about: "Sobre",
     nav_tech: "Tecnologias",
     nav_projects: "Projetos",
     nav_experience: "Experiência",
@@ -78,7 +78,7 @@ const TEXT = {
     radar_on_radar: "No Radar"
   },
   en: {
-    nav_opensource: "Open source", os_title: "Open source", os_intro: "Projects by other people where I have merged pull requests. This list updates itself.", github_button: "Code on GitHub", nav_about: "About", nav_tech: "Technologies", nav_projects: "Projects", nav_experience: "Experience", nav_recommendations: "Recommendations", nav_contact: "Contact",
+    rec_translated: "Translated from the original in Portuguese.", nav_opensource: "Open source", os_title: "Open source", os_intro: "Projects by other people where I have merged pull requests. This list updates itself.", github_button: "Code on GitHub", nav_about: "About", nav_tech: "Technologies", nav_projects: "Projects", nav_experience: "Experience", nav_recommendations: "Recommendations", nav_contact: "Contact",
     hero_subtitle: "Full-stack AI Developer",
     hero_pitch: "I build APIs, automations, and AI systems that reduce manual work, accelerate operations, and generate actionable insights in production.",
     hero_kicker: "End-to-end AI products, from frontend to backend",
@@ -105,7 +105,7 @@ const TEXT = {
     radar_title: "Current Stack", radar_proficient: "Areas Where I Have Proficiency", radar_learning: "Learning Now", radar_on_radar: "On My Radar"
   },
   es: {
-    nav_opensource: "Open source", os_title: "Open source", os_intro: "Proyectos de otras personas en los que tengo pull requests aceptados. Esta lista se actualiza sola.", github_button: "Código en GitHub", nav_about: "Sobre", nav_tech: "Tecnologías", nav_projects: "Proyectos", nav_experience: "Experiencia", nav_recommendations: "Recomendaciones", nav_contact: "Contacto",
+    rec_translated: "Traducido del original en portugués.", nav_opensource: "Open source", os_title: "Open source", os_intro: "Proyectos de otras personas en los que tengo pull requests aceptados. Esta lista se actualiza sola.", github_button: "Código en GitHub", nav_about: "Sobre", nav_tech: "Tecnologías", nav_projects: "Proyectos", nav_experience: "Experiencia", nav_recommendations: "Recomendaciones", nav_contact: "Contacto",
     hero_subtitle: "Desarrollador full-stack de IA",
     hero_pitch: "Construyo APIs, automatizaciones y sistemas de IA que reducen trabajo manual, aceleran operaciones y generan insights aplicables en producción.",
     hero_kicker: "Productos de IA end-to-end, del front al back",
@@ -312,6 +312,10 @@ const RECOMMENDATIONS = [
     role: "Tech Leader no Grupo Nexxees",
     image: "/assets/images/recommendations/junior-matos.jpeg",
     text: "Tive o prazer imenso de ser Tech Lead durante toda evolução do Matheus Silvano na Nexxera, desde estagiário até operador de implantação. Possui muita facilidade de aprendizagem e sempre busca soluções com agilidade. Ótimo comportamento e grande facilidade de trabalho em equipe, muito responsável com suas entregas e o mais importante: entregas com qualidade, sem retrabalho a ser realizado. Enfim, posso afirmar que o Silvano é um grande profissional e que com certeza terá um futuro brilhante pela frente.",
+    i18n: {
+      en: { role: "Tech Leader at Grupo Nexxees", text: "It was a great pleasure to be Tech Lead throughout Matheus Silvano's growth at Nexxera, from intern to implementation operator. He learns very easily and always looks for solutions quickly. Great attitude and a strong team player, very responsible with his deliverables and, most importantly, delivers quality work with no rework needed. In short, I can say that Silvano is a great professional and will certainly have a bright future ahead." },
+      es: { role: "Tech Leader en Grupo Nexxees", text: "Tuve el enorme placer de ser Tech Lead durante toda la evolución de Matheus Silvano en Nexxera, desde pasante hasta operador de implantación. Tiene mucha facilidad para aprender y siempre busca soluciones con agilidad. Excelente comportamiento y gran facilidad para trabajar en equipo, muy responsable con sus entregas y, lo más importante, entregas con calidad y sin retrabajo. En resumen, puedo afirmar que Silvano es un gran profesional y que sin duda tendrá un futuro brillante por delante." }
+    },
     sourceUrl: "https://www.linkedin.com/in/matheussilvano/"
   },
   {
@@ -319,6 +323,10 @@ const RECOMMENDATIONS = [
     role: "Gerente de Implantação no Grupo Nexxees",
     image: "/assets/images/recommendations/robson-clemente.jpeg",
     text: "Matheus Silvano, obrigado pelo período em que você esteve conosco na equipe de Implantação. Desde o seu início como jovem aprendiz até a sua efetivação, você sempre demonstrou muito respeito e comprometimento. Você é um grande profissional e tem um futuro muito promissor.",
+    i18n: {
+      en: { role: "Implementation Manager at Grupo Nexxees", text: "Matheus Silvano, thank you for the time you spent with us on the Implementation team. From your start as a young apprentice until you were hired full time, you always showed great respect and commitment. You are a great professional and have a very promising future." },
+      es: { role: "Gerente de Implantación en Grupo Nexxees", text: "Matheus Silvano, gracias por el tiempo que estuviste con nosotros en el equipo de Implantación. Desde tus inicios como joven aprendiz hasta tu contratación, siempre demostraste mucho respeto y compromiso. Eres un gran profesional y tienes un futuro muy prometedor." }
+    },
     sourceUrl: "https://www.linkedin.com/in/matheussilvano/"
   },
   {
@@ -326,6 +334,10 @@ const RECOMMENDATIONS = [
     role: "Presidente no Grupo Nexxees",
     image: "/assets/images/recommendations/edson-silva.jpeg",
     text: "Matheus,\n\nPrimeiro fico muito feliz por sua trajetória até aqui.\nSegundo, por poder ter contribuído para o início de sua carreira e crescimento.\nTerceiro, por se dedicar e ajudar nosso time em seus objetivos e metas.\nE quarto, por poder afirmar que nossa empresa não só atrai, mas contribui na formação de talentos que têm potencial de voar mais alto e buscar objetivos maiores.\n\nSabemos que grandes talentos seguirão novos rumos um dia. Tentamos ao máximo retê-los, mas o mundo oferece oportunidades e não seremos nós a bloquear, mas a recomendar, torcer e aplaudir pelo seu sucesso.\n\nParabéns, siga em frente e conquiste seus sonhos.",
+    i18n: {
+      en: { role: "President at Grupo Nexxees", text: "Matheus,\n\nFirst, I'm very happy about your journey so far.\nSecond, for having been able to contribute to the start of your career and your growth.\nThird, for your dedication and for helping our team with its goals and targets.\nAnd fourth, for being able to say that our company not only attracts talent but also helps shape people with the potential to fly higher and chase bigger goals.\n\nWe know great talents will one day take new paths. We do our best to keep them, but the world offers opportunities and we won't be the ones to block them, but to recommend, cheer and applaud your success.\n\nCongratulations, keep going and conquer your dreams." },
+      es: { role: "Presidente en Grupo Nexxees", text: "Matheus,\n\nPrimero, estoy muy feliz por tu trayectoria hasta aquí.\nSegundo, por haber podido contribuir al inicio de tu carrera y a tu crecimiento.\nTercero, por dedicarte y ayudar a nuestro equipo con sus objetivos y metas.\nY cuarto, por poder afirmar que nuestra empresa no solo atrae, sino que contribuye a la formación de talentos con potencial para volar más alto y buscar objetivos mayores.\n\nSabemos que los grandes talentos seguirán nuevos rumbos algún día. Intentamos retenerlos al máximo, pero el mundo ofrece oportunidades y no seremos nosotros quienes las bloqueen, sino quienes las recomienden, apoyen y aplaudan tu éxito.\n\nFelicidades, sigue adelante y conquista tus sueños." }
+    },
     sourceUrl: "https://www.linkedin.com/in/matheussilvano/"
   }
 ];

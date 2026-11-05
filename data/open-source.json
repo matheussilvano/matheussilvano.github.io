@@ -3,35 +3,50 @@
     "repo": "voyager-browser/voyager",
     "url": "https://github.com/voyager-browser/voyager",
     "description": "Electron and Vite-based browser that is efficient and performant.",
+    "owner": "voyager-browser",
+    "avatar": "https://avatars.githubusercontent.com/u/352072229?v=4",
     "language": "TypeScript",
+    "stars": 1,
     "lastMerged": "2026-11-04T21:16:35Z"
   },
   {
     "repo": "danoszz/penthera",
     "url": "https://github.com/danoszz/penthera",
     "description": "Offline cyber security agent for your apps and AI coding tools. Open R&D: measured in public, improved every release.",
+    "owner": "danoszz",
+    "avatar": "https://avatars.githubusercontent.com/u/14123926?v=4",
     "language": "JavaScript",
+    "stars": 90,
     "lastMerged": "2026-11-04T11:58:11Z"
   },
   {
     "repo": "kividbio/kividb",
     "url": "https://github.com/kividbio/kividb",
     "description": "A fast, multi-threaded Redis® and Valkey alternative written in Rust: drop-in compatible, with full-text and vector search built in",
+    "owner": "kividbio",
+    "avatar": "https://avatars.githubusercontent.com/u/263324995?v=4",
     "language": "Rust",
+    "stars": 905,
     "lastMerged": "2026-11-04T03:32:39Z"
   },
   {
     "repo": "Terngi-AI/tergniai-multilang",
     "url": "https://github.com/Terngi-AI/tergniai-multilang",
     "description": "Open-source translation & AI conversation API for Nigerian languages - Yoruba, Hausa, Igbo and English. FastAPI + Azure Translator + Groq.",
+    "owner": "Terngi-AI",
+    "avatar": "https://avatars.githubusercontent.com/u/188936050?v=4",
     "language": "Python",
+    "stars": 4,
     "lastMerged": "2026-11-03T19:36:35Z"
   },
   {
     "repo": "loopmark-opensource/loopmark-agent",
     "url": "https://github.com/loopmark-opensource/loopmark-agent",
     "description": "Open-source LangGraph AI marketing agent — social content, email campaigns, audience research, lead funnel, auto-posting",
+    "owner": "loopmark-opensource",
+    "avatar": "https://avatars.githubusercontent.com/u/308150868?v=4",
     "language": "Python",
+    "stars": 7,
     "lastMerged": "2026-11-03T14:13:59Z"
   }
 ]
