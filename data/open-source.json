@@ -1,0 +1,37 @@
+[
+  {
+    "repo": "voyager-browser/voyager",
+    "url": "https://github.com/voyager-browser/voyager",
+    "description": "Electron and Vite-based browser that is efficient and performant.",
+    "language": "TypeScript",
+    "lastMerged": "2026-11-04T21:16:35Z"
+  },
+  {
+    "repo": "danoszz/penthera",
+    "url": "https://github.com/danoszz/penthera",
+    "description": "Offline cyber security agent for your apps and AI coding tools. Open R&D: measured in public, improved every release.",
+    "language": "JavaScript",
+    "lastMerged": "2026-11-04T11:58:11Z"
+  },
+  {
+    "repo": "kividbio/kividb",
+    "url": "https://github.com/kividbio/kividb",
+    "description": "A fast, multi-threaded Redis® and Valkey alternative written in Rust: drop-in compatible, with full-text and vector search built in",
+    "language": "Rust",
+    "lastMerged": "2026-11-04T03:32:39Z"
+  },
+  {
+    "repo": "Terngi-AI/tergniai-multilang",
+    "url": "https://github.com/Terngi-AI/tergniai-multilang",
+    "description": "Open-source translation & AI conversation API for Nigerian languages - Yoruba, Hausa, Igbo and English. FastAPI + Azure Translator + Groq.",
+    "language": "Python",
+    "lastMerged": "2026-11-03T19:36:35Z"
+  },
+  {
+    "repo": "loopmark-opensource/loopmark-agent",
+    "url": "https://github.com/loopmark-opensource/loopmark-agent",
+    "description": "Open-source LangGraph AI marketing agent — social content, email campaigns, audience research, lead funnel, auto-posting",
+    "language": "Python",
+    "lastMerged": "2026-11-03T14:13:59Z"
+  }
+]

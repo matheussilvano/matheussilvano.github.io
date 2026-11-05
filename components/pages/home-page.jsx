@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { ASSETS, TECH_ICONS, PROJECTS, OPEN_SOURCE, EXPERIENCE, RECOMMENDATIONS, t } from "../../data/site-data.js";
+import { ASSETS, TECH_ICONS, PROJECTS, EXPERIENCE, RECOMMENDATIONS, t } from "../../data/site-data.js";
 import { useReveal } from "../../hooks/use-reveal.js";
 import { useCardTilt } from "../../hooks/use-card-tilt.js";
 import { Controls, Footer, ScrollArrow } from "../layout.jsx";
+import openSource from "../../data/open-source.json";
 import { ProjectDetailsModal } from "../cards.jsx";
   const TECH_HIGHLIGHTS = [
     "PostgreSQL",
@@ -240,16 +241,16 @@ import { ProjectDetailsModal } from "../cards.jsx";
             <section id="opensource" className="section">
               <h2 className="section-title reveal">{t(lang, "os_title")}</h2>
               <p className="contact-subtitle reveal">{t(lang, "os_intro")}</p>
-              <div className="os-list">
-                {OPEN_SOURCE.map((o) => (
-                  <div className="os-item reveal" key={o.repo}>
-                    <h3><a href={`https://github.com/${o.repo}`} target="_blank" rel="noopener">{o.repo}</a><span className="os-count">{o.prs.length} {t(lang, o.prs.length === 1 ? "os_pr" : "os_prs")}</span></h3>
-                    <ul>
-                      {o.prs.map(([n, title]) => <li key={n}><a href={`https://github.com/${o.repo}/pull/${n}`} target="_blank" rel="noopener">{title} <span>#{n}</span></a></li>)}
-                    </ul>
-                  </div>
+              <ul className="os-list">
+                {openSource.map((o) => (
+                  <li className="os-item reveal" key={o.repo}>
+                    <a href={o.url} target="_blank" rel="noopener">
+                      <span className="os-name">{o.repo}</span>
+                      {o.description ? <span className="os-desc">{o.description}</span> : null}
+                    </a>
+                  </li>
                 ))}
-              </div>
+              </ul>
               <ScrollArrow href="#experience" label={t(lang, "nav_experience")} inline prompt={t(lang, "next_section_label")} />
             </section>
 

@@ -11,7 +11,7 @@ const ASSETS = {
 
 const TEXT = {
   pt: {
-    nav_opensource: "Open source", os_title: "Contribuições open source", os_intro: "Pull requests aceitos em projetos de outras pessoas.", github_button: "Código no GitHub", os_prs: "PRs aceitos", os_pr: "PR aceito", nav_about: "Sobre",
+    nav_opensource: "Open source", os_title: "Open source", os_intro: "Projetos de outras pessoas em que tenho pull requests aceitos. Esta lista se atualiza sozinha.", github_button: "Código no GitHub", nav_about: "Sobre",
     nav_tech: "Tecnologias",
     nav_projects: "Projetos",
     nav_experience: "Experiência",
@@ -78,7 +78,7 @@ const TEXT = {
     radar_on_radar: "No Radar"
   },
   en: {
-    nav_opensource: "Open source", os_title: "Open source contributions", os_intro: "Merged pull requests in other people's projects.", github_button: "Code on GitHub", os_prs: "merged PRs", os_pr: "merged PR", nav_about: "About", nav_tech: "Technologies", nav_projects: "Projects", nav_experience: "Experience", nav_recommendations: "Recommendations", nav_contact: "Contact",
+    nav_opensource: "Open source", os_title: "Open source", os_intro: "Projects by other people where I have merged pull requests. This list updates itself.", github_button: "Code on GitHub", nav_about: "About", nav_tech: "Technologies", nav_projects: "Projects", nav_experience: "Experience", nav_recommendations: "Recommendations", nav_contact: "Contact",
     hero_subtitle: "Full-stack AI Developer",
     hero_pitch: "I build APIs, automations, and AI systems that reduce manual work, accelerate operations, and generate actionable insights in production.",
     hero_kicker: "End-to-end AI products, from frontend to backend",
@@ -105,7 +105,7 @@ const TEXT = {
     radar_title: "Current Stack", radar_proficient: "Areas Where I Have Proficiency", radar_learning: "Learning Now", radar_on_radar: "On My Radar"
   },
   es: {
-    nav_opensource: "Open source", os_title: "Contribuciones open source", os_intro: "Pull requests aceptados en proyectos de otras personas.", github_button: "Código en GitHub", os_prs: "PRs aceptados", os_pr: "PR aceptado", nav_about: "Sobre", nav_tech: "Tecnologías", nav_projects: "Proyectos", nav_experience: "Experiencia", nav_recommendations: "Recomendaciones", nav_contact: "Contacto",
+    nav_opensource: "Open source", os_title: "Open source", os_intro: "Proyectos de otras personas en los que tengo pull requests aceptados. Esta lista se actualiza sola.", github_button: "Código en GitHub", nav_about: "Sobre", nav_tech: "Tecnologías", nav_projects: "Proyectos", nav_experience: "Experiencia", nav_recommendations: "Recomendaciones", nav_contact: "Contacto",
     hero_subtitle: "Desarrollador full-stack de IA",
     hero_pitch: "Construyo APIs, automatizaciones y sistemas de IA que reducen trabajo manual, aceleran operaciones y generan insights aplicables en producción.",
     hero_kicker: "Productos de IA end-to-end, del front al back",
@@ -425,16 +425,8 @@ const COURSE_SECTIONS = [
 ];
 
 
-const OPEN_SOURCE = [
-  { repo: "kividbio/kividb", prs: [[318, "Add SCRIPT HELP"], [323, "CONFIG SET latency-tracking-info-percentiles refuses what Redis refuses"], [325, "LangChain compatibility harness, results and docs page"], [329, "LangGraph compatibility harness, results and docs page"], [330, "LangChain harness: remove the indexes it creates"], [334, "LlamaIndex harness: Redis vector, doc, index and kv stores"], [341, "LlamaIndex harness: drop only this run's indexes"], [342, "Mem0 harness: Redis vector store and the Memory API"], [343, "LangGraph harness: drop only this run's indexes"]] },
-  { repo: "voyager-browser/voyager", prs: [[95, "Focus the address bar with Alt+D"]] },
-  { repo: "danoszz/penthera", prs: [[244, "Read the Markdown report version from package.json"]] },
-  { repo: "loopmark-opensource/loopmark-agent", prs: [[57, "Replace deprecated datetime.utcnow() with timezone-aware UTC"]] },
-  { repo: "Terngi-AI/tergniai-multilang", prs: [[126, "Use fullmatch for X-Request-ID validation"]] }
-];
-
 function t(lang, key) {
   return (TEXT[lang] && TEXT[lang][key]) || TEXT.pt[key] || key;
 }
 
-export { ASSETS, OPEN_SOURCE, TEXT, TECH_ICONS, PROJECTS, EXPERIENCE, RECOMMENDATIONS, CERT_BADGES, COURSE_SECTIONS, t };
+export { ASSETS, TEXT, TECH_ICONS, PROJECTS, EXPERIENCE, RECOMMENDATIONS, CERT_BADGES, COURSE_SECTIONS, t };
