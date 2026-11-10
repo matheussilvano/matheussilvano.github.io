@@ -6,6 +6,7 @@ import { useCardTilt } from "../../hooks/use-card-tilt.js";
 import { Controls, Footer, ScrollArrow } from "../layout.jsx";
 import openSource from "../../data/open-source.json";
 import { ProjectDetailsModal } from "../cards.jsx";
+import { ExperienceTimeline } from "../experience-timeline.jsx";
   const LANG_COLORS = { Rust: "#dea584", Python: "#3572a5", JavaScript: "#f1e05a", TypeScript: "#3178c6", Go: "#00add8", Java: "#b07219", "C++": "#f34b7d", C: "#555555", Ruby: "#701516", Shell: "#89e051", HTML: "#e34c26", CSS: "#563d7c" };
   const TECH_HIGHLIGHTS = [
     "PostgreSQL",
@@ -328,7 +329,7 @@ import { ProjectDetailsModal } from "../cards.jsx";
 
             <section id="experience" className="section">
               <h2 className="section-title reveal">{t(lang, "experience_title")}</h2>
-              <div className="timeline">{EXPERIENCE.map((e) => <div className="timeline-item reveal" key={e.title}><div className="timeline-content"><span className="timeline-date">{e.date}</span><h3>{e.title}</h3><ul className="timeline-list">{e.bullets.map((b) => <li key={`${e.title}-${b}`}>{b}</li>)}</ul></div></div>)}</div>
+              <ExperienceTimeline items={EXPERIENCE} />
               <ScrollArrow href="#recommendations" label={t(lang, "nav_recommendations")} inline prompt={t(lang, "next_section_label")} />
             </section>
 

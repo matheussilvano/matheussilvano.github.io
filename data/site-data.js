@@ -299,11 +299,62 @@ PROJECTS.all = [
 ];
 
 const EXPERIENCE = [
-  { date: "Fev 2026 - Atual", title: "Dígitro - Desenvolvedor de IA Jr.", bullets: ["Implementação de soluções RAG com fontes internas.", "Integração de ferramentas via MCP.", "Pipelines de avaliação e observabilidade para LLMs em produção."] },
-  { date: "Nov 2025 - Atual", title: "Smart Pricing - Desenvolvedor Full Stack & IA (Contrato)", bullets: ["Construí e entreguei o SaaS da Smart Pricing para operação real, centralizando precificação, ocupação e performance para portfólios com 30+ imóveis.", "Desenvolvi dashboards de pricing, ocupação e performance em React e consolidei indicadores como ADR, ocupação e REVPAR para acelerar decisões por imóvel e por portfólio.", "Projetei e implementei API REST em Python/FastAPI com base para arquitetura multi-tenant, além de automações de precificação e jobs agendados para atualização contínua de métricas."] },
-  { date: "Abr 2025 - Fev 2026", title: "Dígitro - Estagiário em Desenvolvimento de IA", bullets: ["Avaliação e comparação de LLMs para diagnósticos VoIP.", "Prototipagem de fluxos RAG.", "Pesquisa e melhorias de prompts e fluxos."] },
-  { date: "Dez 2023 - Abr 2025", title: "Nexxera - Operador de Implantação", bullets: ["Automação com Shell Script/Python.", "Análise de layouts para integrações financeiras.", "Suporte técnico e estabilidade das entregas."] },
-  { date: "Jan 2022 - Dez 2023", title: "Nexxera - Jovem Aprendiz (Implantação)", bullets: ["Onboarding de clientes em sistemas internos.", "Suporte a implantações e testes funcionais.", "Aprendizado de processos de negócio."] }
+  {
+    company: "Dígitro Tecnologia",
+    role: "Desenvolvedor de Inteligência Artificial",
+    date: "Fev 2026 - Atual",
+    place: "Florianópolis/SC · CLT",
+    current: true,
+    bullets: [
+      "Plataforma corporativa de agentes de IA que opera sistemas internos por conversa, com conectores MCP, credenciais por usuário, auditoria e confirmação humana antes de ações sensíveis (328 testes automatizados).",
+      "Assistente de código que gera URAs a partir de linguagem natural, reduzindo em cerca de 2 dias o tempo de entrega.",
+      "Servidor MCP em Python para administrar a plataforma de agentes de voz, com modelo de ameaças que mantém segredos fora do alcance do modelo (271 testes).",
+      "Assistente com modelos locais: o modelo só identifica a intenção e 32 rotinas determinísticas executam as ações. Um modelo de 2B acertou todos os campos em 4,5 s, contra 14,4 s de um de 8B."
+    ],
+    metrics: [
+      { value: "262 → 4 ms", label: "listagem de conversas" },
+      { value: "503 → 117 kB", label: "JavaScript inicial" },
+      { value: "-83%", label: "custo com prompt caching" }
+    ],
+    stack: ["Python", "MCP", "RAG", "Chain-of-Thought", "Few-shot", "Prompt caching", "SLMs locais", "JavaScript"]
+  },
+  {
+    company: "Smart Pricing",
+    role: "Desenvolvedor Full Stack & IA",
+    date: "Nov 2025 - Atual",
+    place: "Remoto · Contrato",
+    current: true,
+    bullets: [
+      "SaaS de precificação e análise operacional entregue a clientes finais, com API multi-tenant e painéis que consolidam ocupação, ADR e RevPAR.",
+      "Ajustes de preço automáticos para imóveis sem reserva (3, 5 e 7 dias) e alertas de avaliações abaixo de 4,5."
+    ],
+    metrics: [{ value: "30+", label: "imóveis por portfólio" }],
+    stack: ["FastAPI", "React", "Python", "Multi-tenant", "SaaS"]
+  },
+  {
+    company: "Fonte",
+    role: "Desenvolvedor de Automações & IA",
+    date: "Fev 2026 - Abr 2026",
+    place: "Remoto · Contrato",
+    bullets: ["Triagem de demandas de WhatsApp em cards do Trello, sem registro manual."],
+    stack: ["n8n", "OpenAI", "WhatsApp", "Trello"]
+  },
+  {
+    company: "Dígitro Tecnologia",
+    role: "Estagiário em Desenvolvimento de IA",
+    date: "Abr 2025 - Jan 2026",
+    place: "Florianópolis/SC",
+    bullets: ["Comparação de LLMs e re-rankers em qualidade, latência e custo para diagnosticar chamadas VoIP e escolher modelos."],
+    stack: ["LLMs", "Re-rankers", "VoIP", "Avaliação de modelos"]
+  },
+  {
+    company: "Nexxera",
+    role: "Operador de Implantação (antes, Jovem Aprendiz)",
+    date: "Jan 2022 - Abr 2025",
+    place: "Florianópolis/SC",
+    bullets: ["Automação de rotinas de implantação e auditoria de dados, reduzindo retrabalho."],
+    stack: ["Python", "Shell Script", "SQL"]
+  }
 ];
 
 const RECOMMENDATIONS = [
