@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { ASSETS, TECH_ICONS, PROJECTS, EXPERIENCE, RECOMMENDATIONS, t } from "../../data/site-data.js";
 import { useReveal } from "../../hooks/use-reveal.js";
 import { useCardTilt } from "../../hooks/use-card-tilt.js";
@@ -33,6 +34,63 @@ import { ProjectDetailsModal } from "../cards.jsx";
     "Git"
   ];
   const TECH_HIGHLIGHT_MAP = new Set(TECH_HIGHLIGHTS.map((item) => item.toLowerCase()));
+  const OS_VISIBLE = 6;
+
+  function OpenSourceCard({ o, reveal }) {
+    return (
+      <li className={reveal ? "os-card reveal" : "os-card"}>
+        <a href={o.url} target="_blank" rel="noopener">
+          <div className="os-head">
+            <img src={o.avatar} alt="" width="44" height="44" loading="lazy" className="os-avatar" />
+            <div>
+              <span className="os-owner">{o.owner}</span>
+              <h3 className="os-name">{o.repo.split("/")[1]}</h3>
+            </div>
+            <i className="fa-solid fa-arrow-up-right-from-square os-open" aria-hidden="true"></i>
+          </div>
+          <p className="os-desc">{o.description || "\u00a0"}</p>
+          <div className="os-meta">
+            {o.language ? <span className="os-lang"><span className="os-dot" style={{ background: LANG_COLORS[o.language] || "var(--brand)" }}></span>{o.language}</span> : <span></span>}
+            {o.stars ? <span className="os-stars"><i className="fa-regular fa-star" aria-hidden="true"></i> {o.stars.toLocaleString()}</span> : null}
+          </div>
+        </a>
+      </li>
+    );
+  }
+
+  function OpenSourceModal({ lang, projects, open, onClose }) {
+    useEffect(() => {
+      if (!open) return undefined;
+      const previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      const onKeyDown = (event) => {
+        if (event.key === "Escape") onClose();
+      };
+      window.addEventListener("keydown", onKeyDown);
+      return () => {
+        document.body.style.overflow = previousOverflow;
+        window.removeEventListener("keydown", onKeyDown);
+      };
+    }, [open, onClose]);
+
+    if (!open) return null;
+
+    return createPortal(
+      <div className="project-modal-overlay" role="dialog" aria-modal="true" aria-label={t(lang, "os_title")} onClick={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}>
+        <article className="project-modal os-modal">
+          <button className="project-modal-close" type="button" onClick={onClose} aria-label={t(lang, "close_button")}>{t(lang, "close_button")}</button>
+          <h2 className="os-modal-title">{t(lang, "os_title")} ({projects.length})</h2>
+          <ul className="os-grid">
+            {projects.map((o) => <OpenSourceCard o={o} key={o.repo} />)}
+          </ul>
+        </article>
+      </div>,
+      document.body
+    );
+  }
+
   const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const TECH_HIGHLIGHT_REGEX = new RegExp(`(${TECH_HIGHLIGHTS.map(escapeRegExp).join("|")})`, "gi");
 
@@ -49,6 +107,7 @@ import { ProjectDetailsModal } from "../cards.jsx";
     const [recIndex, setRecIndex] = useState(0);
     const [activeSection, setActiveSection] = useState("about");
     const [featuredModalProject, setFeaturedModalProject] = useState(null);
+    const [showAllOpenSource, setShowAllOpenSource] = useState(false);
     const baseRec = RECOMMENDATIONS[recIndex];
     const translated = lang !== "pt" && baseRec.i18n && baseRec.i18n[lang];
     const currentRec = { ...baseRec, ...(translated || {}) };
@@ -256,26 +315,14 @@ import { ProjectDetailsModal } from "../cards.jsx";
               <h2 className="section-title reveal">{t(lang, "os_title")}</h2>
               <p className="contact-subtitle reveal">{t(lang, "os_intro")}</p>
               <ul className="os-grid">
-                {openSource.map((o) => (
-                  <li className="os-card reveal" key={o.repo}>
-                    <a href={o.url} target="_blank" rel="noopener">
-                      <div className="os-head">
-                        <img src={o.avatar} alt="" width="44" height="44" loading="lazy" className="os-avatar" />
-                        <div>
-                          <span className="os-owner">{o.owner}</span>
-                          <h3 className="os-name">{o.repo.split("/")[1]}</h3>
-                        </div>
-                        <i className="fa-solid fa-arrow-up-right-from-square os-open" aria-hidden="true"></i>
-                      </div>
-                      <p className="os-desc">{o.description || "\u00a0"}</p>
-                      <div className="os-meta">
-                        {o.language ? <span className="os-lang"><span className="os-dot" style={{ background: LANG_COLORS[o.language] || "var(--brand)" }}></span>{o.language}</span> : <span></span>}
-                        {o.stars ? <span className="os-stars"><i className="fa-regular fa-star" aria-hidden="true"></i> {o.stars.toLocaleString()}</span> : null}
-                      </div>
-                    </a>
-                  </li>
-                ))}
+                {openSource.slice(0, OS_VISIBLE).map((o) => <OpenSourceCard o={o} reveal key={o.repo} />)}
               </ul>
+              {openSource.length > OS_VISIBLE ? (
+                <div className="card-actions os-section-more" style={{ justifyContent: "center" }}>
+                  <button className="btn btn-secondary" type="button" onClick={() => setShowAllOpenSource(true)}>{t(lang, "os_view_all")} ({openSource.length})</button>
+                </div>
+              ) : null}
+              <OpenSourceModal lang={lang} projects={openSource} open={showAllOpenSource} onClose={() => setShowAllOpenSource(false)} />
               <ScrollArrow href="#experience" label={t(lang, "nav_experience")} inline prompt={t(lang, "next_section_label")} />
             </section>
 
